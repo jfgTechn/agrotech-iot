@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template_string
 import sqlite3
 import os
+import pytz
 from datetime import datetime
 import json
 import requests   # 👈 NUEVO
@@ -11,7 +12,7 @@ estado_alerta = {
     "alta": False,
     "baja": False
 }
-
+tz = pytz.timezone("America/La_Paz)
 
 # ================= TELEGRAM =================
 TELEGRAM_TOKEN = "8166291867:AAHIp2Q7E-44xe1a8ovHi27LGYQiTo_BEFM"
@@ -66,7 +67,7 @@ def recibir_datos():
 
     temperatura = data["temperatura"]
     humedad = data["humedad"]
-    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    fecha = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 
     conn = conectar_db()
     cursor = conn.cursor()
@@ -275,4 +276,5 @@ def dashboard():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 
