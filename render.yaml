@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: agrotech
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app8alert.py
